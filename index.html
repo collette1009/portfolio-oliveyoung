@@ -807,3 +807,112 @@
         <div class="modal-result-num">접수·조사·보상·정산 분리</div>
         <div class="modal-result-desc">3주체 커뮤니케이션 구조 정의 · 내부 운영 기준 정리 · 파트너 협의 근거 기반 전환</div>
       </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal 5: AI 자동화 (보조) -->
+<div class="modal-overlay" id="modal5">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div>
+        <div class="modal-tags">
+          <span class="c-tag">운영 자동화</span>
+          <span class="c-tag">기준값 표준화</span>
+          <span class="c-tag">운영 데이터 정합성</span>
+        </div>
+        <div class="modal-title">반복 입력 자동화와 기준값 표준화 · 상담 처리 속도와 운영 데이터 정합성을 함께 개선</div>
+      </div>
+      <button class="modal-close" aria-label="닫기">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-label">문제 상황</div>
+        <div class="modal-section-text">대량 취소·반품·재배송 처리 시 동일 항목을 반복 입력해야 했습니다. 특히 귀책대상·처리 사유처럼 후속 정산과 집계에 연결되는 기준값이 잘못 입력되면 <strong>운영 데이터 전체가 왜곡될 수 있었습니다.</strong> 자동화의 목적을 단순 속도 향상이 아니라 기준값 표준화와 데이터 정합성 개선으로 설정했습니다.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">실행 · 설계 방향</div>
+        <div class="modal-section-text">반복 입력 항목과 기준값을 분리하고, Claude를 활용해 Chrome Extension을 직접 구현했습니다. 재배송·반품 등록 시 주요 항목이 단축키 한 번으로 자동 입력되도록 설계했습니다.<br><br>모든 단계를 자동화하지 않았습니다. <strong>귀책 판단, 예외 케이스 확인, 최종 등록, 비용·정산·고객 안내에 영향을 주는 구간은 담당자가 직접 확인하도록</strong> 설계했습니다. 처리 동선은 기존 8단계에서 2단계 수준으로 줄었습니다.</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">결과</div>
+        <div class="modal-section-text">기준값(귀책대상·처리사유)이 표준화되면서 담당자별 입력 편차가 줄었고, 후속 집계와 정산 데이터의 정합성이 개선됐습니다. 누적 1,151건 처리 과정에서 반복 업무 부담을 줄이면서도 <strong>리스크 구간의 사람 확인 구조는 유지</strong>됐습니다. 실제 업무 효율화에 기여한 점을 인정받아 비개발 직군 중 유일하게 AI 도구 업무비를 공식 승인받았습니다.</div>
+      </div>
+      <div class="modal-result">
+        <div class="modal-result-num">8→2단계</div>
+        <div class="modal-result-desc">반복 입력 자동화 · 기준값 표준화 · 운영 데이터 정합성 개선 · 누적 1,151건 처리</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER / CONTACT ══ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-name">오희은</div>
+        <div class="footer-sub">CJ올리브영 · Product Manager - Contact Center Platform 지원</div>
+        <div class="footer-sub" style="margin-top:4px;">gldms1009@naver.com &nbsp;·&nbsp; 010-2357-2674</div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="mailto:gldms1009@naver.com" class="btn btn-dark">이메일 보내기</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hd = document.getElementById('hd');
+  window.addEventListener('scroll', () => { hd.classList.toggle('on', window.scrollY > 8); }, { passive: true });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } });
+  }, { threshold: 0, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.fi').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) { el.classList.add('show'); }
+    else { io.observe(el); }
+  });
+  const navToggle = document.getElementById('navToggle');
+  const navEl = document.getElementById('nav');
+  navToggle.addEventListener('click', () => { navToggle.classList.toggle('open'); navEl.classList.toggle('open'); });
+  const overlays = document.querySelectorAll('.modal-overlay');
+  function openModal(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    el.querySelector('.modal-close').focus();
+  }
+  function closeModal(el) {
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-modal]').forEach(trigger => {
+    trigger.addEventListener('click', () => openModal(trigger.dataset.modal));
+  });
+  overlays.forEach(overlay => {
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(overlay); });
+    overlay.querySelector('.modal-close').addEventListener('click', () => closeModal(overlay));
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') overlays.forEach(o => { if (o.classList.contains('open')) closeModal(o); });
+  });
+  document.querySelectorAll('nav a, .btn[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        navToggle.classList.remove('open');
+        navEl.classList.remove('open');
+      }
+    });
+  });
+</script>
+</body>
+</html>
